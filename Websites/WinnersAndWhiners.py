@@ -5,10 +5,9 @@ from lxml import html
 class WinnersAndWhiners:
 
     sportWebsiteMap = {
-        "ncaab" : "https://winnersandwhiners.com/games/ncaab"
+        "ncaab" : "https://winnersandwhiners.com/games/ncaab",
+        "nfl" : "https://winnersandwhiners.com/games/nfl/"
     }
-
-    # currentSportWebsite = ""
 
     def __init__(self, sport):
         self.currentSportWebsite = self.sportWebsiteMap[sport]
