@@ -16,6 +16,9 @@ class WinnersAndWhiners:
 
     def getPrediction(self, team1, team2):
         predictionSiteLink = self.getPredictionSiteLink(team1, team2)
+
+        if not predictionSiteLink: #if no links for this game are found
+            return "Not a valid game"
         
         predictions = self.getAllAvailablePredictions(predictionSiteLink)
 
