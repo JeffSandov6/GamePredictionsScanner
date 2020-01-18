@@ -1,8 +1,8 @@
 from Websites.WinnersAndWhiners import WinnersAndWhiners
 
 # first the input will ask for the 2 teams, and the sport
-team1 = "niagara"
-team2 = "syracuse"
+team1 = "ucsb"
+team2 = "hawaii"
 sport = "ncaab"
 
 # we need to verify that this is an actual (upcoming) game 
