@@ -1,25 +1,72 @@
 from Websites.WinnersAndWhiners import WinnersAndWhiners
+from Websites.StatSalt import StatSalt
 
-# first the input will ask for the 2 teams, and the sport
-team1 = "ucsb"
-team2 = "hawaii"
+
+def removeSpacesInTeamNames(teamName):
+    teamName = teamName.strip()
+    return teamName.replace(" ", "-")
+
+
+def getPredictionsFromSites(team1, team2, sport):
+    wwObj = WinnersAndWhiners(sport)
+    statSaltObj = StatSalt(sport)
+
+    listOfLists = []
+
+    wwPredictions = wwObj.getPrediction(team1, team2)
+    # this will be the check for whether or not the user is looking for a valid game, that way, 
+    # we won't check the other sites for their predictions, thus saving resources
+    if(wwPredictions == 'Not a valid game'):
+        print("This is not a valid game")
+        return
+    
+
+    statSaltPredictions = statSaltObj.getPrediction(team1, team2)
+
+
+    listOfLists.append((wwObj.sportWebsiteMap['siteHomePage'], wwPredictions))
+    listOfLists.append((statSaltObj.sportWebsiteMap['siteHomePage'], statSaltPredictions))
+
+
+    printPredictions(listOfLists)
+
+
+
+
+
+
+def printPredictions(listOfObjectsAndPredictions):
+    for (homeLink, sitePredictionsList) in listOfObjectsAndPredictions:
+        print("Predictions from " + homeLink + " are: ")
+
+        for curPrediction in sitePredictionsList:
+            print(curPrediction)
+
+        print()
+
+
+
+team1 = "oklahoma"
+team2 = "baylor"
 sport = "ncaab"
 
-# we need to verify that this is an actual (upcoming) game 
+# team1 = removeSpacesInTeamNames(
+#     input("What's the first team's name? ").lower())
+# team2 = removeSpacesInTeamNames(
+#     input("What's the second team's name? ").lower())
+# sport = input("Choose 1 of the following sports: ncaab, nfl, nba: ").lower().strip()
 
-obj = WinnersAndWhiners(sport)
+print()
 
-#make both teams lowercase and remove replace spaces w/ -
 
-wwPredictions = obj.getPrediction(team1, team2)
-
-print(wwPredictions)
-
-# websitesMap = 
-
+getPredictionsFromSites(team1, team2, sport)
 
 
 
+
+
+
+    
 
 
 
