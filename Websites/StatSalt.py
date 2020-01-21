@@ -5,7 +5,7 @@ from lxml import html
 class StatSalt:
 
     sportWebsiteMap = {
-        "siteHomePage" : "https://statsalt.com/",
+        "siteHomePage" : "https://statsalt.com",
         "ncaab" : "https://statsalt.com/games/ncaab/",
         "nfl" : "https://statsalt.com/games/nfl/",
         "nba" : "https://statsalt.com/games/nba/"
@@ -30,7 +30,7 @@ class StatSalt:
 
     def getPredictionSiteLink(self, team1, team2):
         rowOfGamesElem = self.pageTree.xpath('//*[@id="cards"]')
-        #it seems that this set isnt needed here because only 1 link per team is being found
+        #it seems that this set below isnt needed here because only 1 link per team is being found
         # potentialGameLinks = set()
 
         correctLink = ""
