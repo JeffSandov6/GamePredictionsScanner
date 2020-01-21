@@ -5,7 +5,7 @@ from lxml import html
 class WinnersAndWhiners:
 
     sportWebsiteMap = {
-        "siteHomePage" : "http://winnersandwhiners.com/",
+        "siteHomePage" : "http://winnersandwhiners.com",
         "ncaab" : "https://winnersandwhiners.com/games/ncaab",
         "nfl" : "https://winnersandwhiners.com/games/nfl/",
         "nba" : "https://winnersandwhiners.com/games/nba/"

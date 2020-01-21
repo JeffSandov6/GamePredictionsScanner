@@ -1,5 +1,6 @@
 from Websites.WinnersAndWhiners import WinnersAndWhiners
 from Websites.StatSalt import StatSalt
+from Websites.SportsChatPlace import SportsChatPlace
 
 
 def removeSpacesInTeamNames(teamName):
@@ -10,22 +11,23 @@ def removeSpacesInTeamNames(teamName):
 def getPredictionsFromSites(team1, team2, sport):
     wwObj = WinnersAndWhiners(sport)
     statSaltObj = StatSalt(sport)
+    scpObj = SportsChatPlace(sport)
+
 
     listOfLists = []
 
     wwPredictions = wwObj.getPrediction(team1, team2)
-    # this will be the check for whether or not the user is looking for a valid game, that way, 
-    # we won't check the other sites for their predictions, thus saving resources
-    if(wwPredictions == 'Not a valid game'):
-        print("This is not a valid game")
-        return
-    
-
     statSaltPredictions = statSaltObj.getPrediction(team1, team2)
+    scpPredictions = scpObj.getPrediction(team1, team2)
+
+    if isinstance(wwPredictions, str) and isinstance(statSaltPredictions, str) and isinstance(scpPredictions, str):
+        print("Not a valid game, or no predictions have been posted.")
+        return
 
 
     listOfLists.append((wwObj.sportWebsiteMap['siteHomePage'], wwPredictions))
     listOfLists.append((statSaltObj.sportWebsiteMap['siteHomePage'], statSaltPredictions))
+    listOfLists.append((scpObj.sportWebsiteMap['siteHomePage'], scpPredictions))
 
 
     printPredictions(listOfLists)
@@ -38,6 +40,11 @@ def getPredictionsFromSites(team1, team2, sport):
 def printPredictions(listOfObjectsAndPredictions):
     for (homeLink, sitePredictionsList) in listOfObjectsAndPredictions:
         print("Predictions from " + homeLink + " are: ")
+        
+        if isinstance(sitePredictionsList, str):
+            print("No predictions found")
+            print()
+            continue
 
         for curPrediction in sitePredictionsList:
             print(curPrediction)
@@ -46,20 +53,23 @@ def printPredictions(listOfObjectsAndPredictions):
 
 
 
-team1 = "oklahoma"
-team2 = "baylor"
-sport = "ncaab"
+# team1 = "lakers"
+# team2 = "celtics"
+# sport = "nba"
 
-# team1 = removeSpacesInTeamNames(
-#     input("What's the first team's name? ").lower())
-# team2 = removeSpacesInTeamNames(
-#     input("What's the second team's name? ").lower())
-# sport = input("Choose 1 of the following sports: ncaab, nfl, nba: ").lower().strip()
+team1 = removeSpacesInTeamNames(
+    input("What's the first team's name? ").lower())
+team2 = removeSpacesInTeamNames(
+    input("What's the second team's name? ").lower())
+sport = input("Choose 1 of the following sports: ncaab, nfl, nba: ").lower().strip()
 
 print()
 
 
 getPredictionsFromSites(team1, team2, sport)
+
+
+# print(scpPredictions)
 
 
 
