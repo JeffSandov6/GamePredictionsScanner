@@ -40,7 +40,7 @@ class SportsChatPlace:
                     potentialGameLinks.add(i[2])
 
 
-        if(len(potentialGameLinks) > 1):
+        if(len(potentialGameLinks) > 1 or len(potentialGameLinks) < 1):
             return ""
 
         return self.structureLink(potentialGameLinks.pop())
