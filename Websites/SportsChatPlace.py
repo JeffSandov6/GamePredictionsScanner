@@ -5,10 +5,10 @@ from lxml import html
 class SportsChatPlace:
 
     sportWebsiteMap = {
-        "siteHomePage" : "https://sportschatplace.com",
-        "ncaab" : "https://sportschatplace.com/picks/college-basketball/todays-games",
-        "nfl" : "https://sportschatplace.com/picks/nfl/this-weeks-games", #might change this to todays-games
-        "nba" : "https://sportschatplace.com/picks/nba/todays-games"
+        "siteHomePage" : "https://sportschatplace.com/",
+        "ncaab" : "https://sportschatplace.com/college-basketball-picks/",
+        "nfl" : "https://sportschatplace.com/nfl-picks/", #might change this to todays-games
+        "nba" : "https://sportschatplace.com/nba-picks/"
     }
 
     def __init__(self, sport):
@@ -27,10 +27,8 @@ class SportsChatPlace:
         return predictions
 
     def getPredictionSiteLink(self, team1, team2):
-        rowOfGamesElem = self.pageTree.xpath('//*[@id="block-sportschatplace-content"]/div/div')
+        rowOfGamesElem = self.pageTree.xpath('//*[@id="content"]/div/section/div[3]')
         potentialGameLinks = set()
-
-        correctLink = "hi"
 
         for x in rowOfGamesElem:
             links = x.iterlinks()
@@ -53,9 +51,9 @@ class SportsChatPlace:
         pageRequest = requests.get(predictionSiteLink)
         pageTree = html.fromstring(pageRequest.content)
 
-        
-        # pickClassElemList = pageTree.find_class("article-pick")
-        pickClassElemList = pageTree.xpath('//*[@id="block-sportschatplace-content"]/article/div/div[3]/div[3]/a/div/div')
+        pickClassElemList = pageTree.find_class("article-pick")
+        pickClassElemList = pickClassElemList[0].xpath('div/div/div/div[2]/h3/span[2]')
+    
 
         predictions = []
         for curElem in pickClassElemList:

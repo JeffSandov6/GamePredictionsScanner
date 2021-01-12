@@ -6,7 +6,7 @@ class WinnersAndWhiners:
 
     sportWebsiteMap = {
         "siteHomePage" : "http://winnersandwhiners.com",
-        "ncaab" : "https://winnersandwhiners.com/games/ncaab",
+        "ncaab" : "https://winnersandwhiners.com/games/ncaab/",
         "nfl" : "https://winnersandwhiners.com/games/nfl/",
         "nba" : "https://winnersandwhiners.com/games/nba/"
     }
@@ -50,7 +50,7 @@ class WinnersAndWhiners:
 
     
     def getPredictionSiteLink(self, team1, team2):
-        rowOfGamesElem = self.pageTree.xpath('//*[@id="ww-vue-app"]/div[3]/div/div[2]/div[2]/div') #returns elems after div class="row"
+        rowOfGamesElem = self.pageTree.xpath('//*[@id="ww-vue-app"]')
         potentialGameLinks = set()
 
         for x in rowOfGamesElem:
@@ -58,8 +58,12 @@ class WinnersAndWhiners:
             for i in links:
                 #the way the links object is returned, each object has 4 parts to it,
                 #where the second is the link
+                    
                 if (team1 in i[2]) and (team2 in i[2]) and (i[2][0:5] == "https"):
                     potentialGameLinks.add(i[2])
+                elif (team1 in i[2]) and (team2 in i[2]):
+                    potentialLink = self.sportWebsiteMap["siteHomePage"] + i[2]
+                    potentialGameLinks.add(potentialLink)
 
         return self.getCorrectLink(potentialGameLinks)
 
@@ -71,7 +75,8 @@ class WinnersAndWhiners:
             if(self.hasCorrectFormat(gameLink)):
                 correctLink = gameLink
                 break
-
+        
+        
         return correctLink
 
     def hasCorrectFormat(self, gameLink):
